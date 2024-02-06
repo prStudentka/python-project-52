@@ -8,10 +8,9 @@ from django.contrib.auth import logout, get_user_model
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.list import ListView
 from django.utils.translation import gettext as _
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-
 
 
 class IndexView(ListView):
@@ -31,22 +30,31 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     extra_context = {'title': _('Registration'), 'button': _('Register')}
 
 	
-class UserUpdateView(  UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     template_name = 'form.html'
     model = get_user_model()  
     form_class = RegistrationForm
     context_object_name = 'form'
+    #redirect_field_name = 'users_index'
     success_url = reverse_lazy('users_index')
+    error_login_message = _('You are not logged in! Please log in.')
+    error_permission_message = _('You do not have permissions to change this user')
     success_message = _("User successfully updated!")
-    error_message = _('You do not have permissions to change this user')
     extra_context = {'title': _('Update user'), 'button': _('Update')}
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, self.error_login_message)
+            return redirect(reverse_lazy('users_index'))
+        return super().dispatch(request, *args, **kwargs)
 
     def test_func(self):
         return self.request.user == self.get_object()
 
     def handle_no_permission(self):
-        messages.warning(self.request, _('You do not have permissions to change this user'))
+        messages.warning(self.request, self.error_permission_message)
         return redirect(reverse_lazy('users_index'))
+
 
 
 class UserLoginView(SuccessMessageMixin, LoginView):
@@ -64,9 +72,30 @@ def user_logout(request):
     return redirect('index')
 
 
-class UserDeleteView(SuccessMessageMixin, DeleteView):
+class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin,SuccessMessageMixin, DeleteView):
     template_name = 'form.html'
     model = CustomUser
     success_url = reverse_lazy('users_index')
-    success_message = _("User successfully deleted!")
-    extra_context = {'title': _('Delete user'), 'button': _('Yes, delete'), 'delete': 'delete'}
+    info_message = _('Are you sure you want to delete')
+    success_message = _("User is successfully deleted!")
+    error_login_message = _('You are not logged in! Please log in.')
+    error_permission_message = _('You do not have permissions to change this user')
+    extra_context = {'title': _('Delete user'), 'button': _('Yes, delete'), 'text': info_message}
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, self.error_login_message)
+            return redirect(reverse_lazy('users_index'))
+        return super().dispatch(request, *args, **kwargs)
+
+    def test_func(self):
+        return self.request.user == self.get_object()
+
+    def handle_no_permission(self):
+        messages.warning(self.request, self.error_permission_message)
+        return redirect(reverse_lazy('users_index'))
+	
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['text'] = f'<p>{self.info_message} {self.request.user}?</p>'
+        return context
