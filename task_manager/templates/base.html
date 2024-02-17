@@ -17,9 +17,9 @@
 	{% include 'header.html' %}
 
 {% endblock header %}
- 
-{% bootstrap_messages %}
- 
+ {% autoescape off %}
+   {% bootstrap_messages %}
+ {% endautoescape %}
 <div class="container wrapper flex-grow-1"> 
 {% block content %}
 {% endblock content %}
