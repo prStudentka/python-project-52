@@ -10,6 +10,7 @@ from django.utils.translation import gettext as _
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .mixin import UserLoginPassesMixin
+from django.db.models import ProtectedError
 
 
 class IndexView(ListView):
@@ -17,7 +18,7 @@ class IndexView(ListView):
     model = CustomUser
     context_object_name = 'users'
     extra_context = {'title': _('Users')}
-    #paginate_by = 10
+    paginate_by = 100
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
@@ -34,7 +35,6 @@ class UserUpdateView(UserLoginPassesMixin, SuccessMessageMixin, UpdateView):
     model = get_user_model()  
     form_class = RegistrationForm
     context_object_name = 'form'
-    #redirect_field_name = 'users_index'
     success_url = reverse_lazy('users_index')
     success_message = _("User successfully updated!")
     extra_context = {'title': _('Update user'), 'button': _('Update')}
@@ -61,9 +61,17 @@ class UserDeleteView(UserLoginPassesMixin, SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('users_index')
     info_message = _('Are you sure you want to delete')
     success_message = _("User is successfully deleted!")
+    error_message = _('You can\'t to delete user because he was used')
     extra_context = {'title': _('Delete user'), 'button': _('Yes, delete'), 'text': info_message, 'new_class': 'btn btn-danger'}
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['text'] = f'<p>{self.info_message} {self.request.user}?</p>'
         return context
+		
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().post(request, *args, **kwargs)
+        except ProtectedError:
+            messages.error(request, self.error_message)
+            return redirect('users_index')
