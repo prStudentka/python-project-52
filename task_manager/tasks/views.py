@@ -67,4 +67,3 @@ class TaskDetailView(SuccessMessageMixin, DetailView):
     template_name = 'task.html'    
     model = Task
     context_object_name = 'task'
-    pk_url_kwarg = 'task_id'

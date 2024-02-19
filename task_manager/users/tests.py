@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse_lazy
 from task_manager.users.models import CustomUser
 from task_manager.users.forms import RegistrationForm
