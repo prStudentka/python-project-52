@@ -7,13 +7,16 @@ from django.views.generic.detail import DetailView
 from django.utils.translation import gettext as _
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from django_filters.views import FilterView
+from task_manager.tasks.filters import TaskFilter
 
 
 # Create your views here.
-class IndexView(ListView):
+class IndexView(FilterView):
     template_name = 'tasks.html'
     model = Task
     context_object_name = 'tasks'
+    filterset_class = TaskFilter
     extra_context = {'title': _('Tasks'), 'button': _('Create task')}
 
 
@@ -67,3 +70,4 @@ class TaskDetailView(SuccessMessageMixin, DetailView):
     template_name = 'task.html'    
     model = Task
     context_object_name = 'task'
+

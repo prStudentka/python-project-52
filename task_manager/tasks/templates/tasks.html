@@ -7,6 +7,16 @@
 <h1 class="my-4">{{ title }}</h1>
 <a class="btn btn-primary mb-3" href="{% url 'create task' %}" role="button">{{ button }}</a>
 
+<div class="card mb-3">
+    <div class="card-body bg-light">
+ <form class="form-inline center" method="get">
+            {% bootstrap_form filter.form field_class='ml-2 mr-3' %}
+
+                <input class="btn btn-primary" type="submit" value="{% translate 'Show' context 'Task filter button' %}">
+
+</form>
+    </div>
+</div>
 
 <table class="table table-striped">
     <thead>
