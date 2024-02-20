@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import *
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from django.views.generic.list import ListView
+
 from django.views.generic.detail import DetailView
 from django.utils.translation import gettext as _
 from django.urls import reverse_lazy
@@ -15,9 +15,9 @@ from task_manager.tasks.filters import TaskFilter
 class IndexView(FilterView):
     template_name = 'tasks.html'
     model = Task
-    context_object_name = 'tasks'
     filterset_class = TaskFilter
-    extra_context = {'title': _('Tasks'), 'button': _('Create task')}
+    context_object_name = 'tasks'
+    extra_context = {'title': _('Tasks'), 'button': _('Create task'), 'button_filter': _('Show')}
 
 
 class TaskCreateView(SuccessMessageMixin, CreateView):
