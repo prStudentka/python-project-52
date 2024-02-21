@@ -5,7 +5,7 @@ from task_manager.users.models import CustomUser
 from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
-
+from task_manager.tasks.filters import TaskFilter
 # Create your tests here.
 
 
@@ -110,3 +110,38 @@ class TaskCrudTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='task.html')
+
+
+    def test_filter_task(self):
+        data = {
+            'status': self.status,
+        }
+        self.status1 = Status.objects.create(name='status and test ')
+        self.client.force_login(user=self.test_author)
+        url = reverse_lazy('tasks_index')
+        tasks = Task.objects.all()
+        response = self.client.get(url)
+        filter_queryset = TaskFilter(data, tasks, request=response).qs
+        self.assertIn(self.first_task, filter_queryset)
+
+
+    def test_filter_my_tasks(self):
+        data = {
+            'my_task': 'on'
+		}
+        second_task = Task.objects.create(
+	        name = 'Task second',
+		    description = 'second description',
+		    status = self.status,
+		    executor = self.executor,
+		    author = self.executor
+        )
+        self.client.force_login(user=self.test_author)
+        url = reverse_lazy('tasks_index')
+        tasks = Task.objects.all()
+        self.assertEquals(len(tasks), 2)
+        response = self.client.get(url)
+        response.user = self.test_author
+        filter_queryset = TaskFilter(data, tasks, request=response).qs
+        self.assertIn(self.first_task, filter_queryset)
+        self.assertTrue(len(filter_queryset), 1)
