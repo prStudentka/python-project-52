@@ -26,7 +26,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     context_object_name = 'form'
     success_url = reverse_lazy('log in')
     success_message = _("User is successfully registered")
-    extra_context = {'title': _('Registration'), 'button': _('Register')}
+    extra_context = {'title': _('Sign up'), 'button': _('Register')}
 
 	
 class UserUpdateView(UserLoginPassesMixin, SuccessMessageMixin, UpdateView):
@@ -45,7 +45,7 @@ class UserLoginView(SuccessMessageMixin, LoginView):
     next_page = reverse_lazy('index')
     context_object_name = 'form'
     success_message = _("You are logged in")
-    extra_context = {'title': _('Entrance'), 'button': _('Enter')}
+    extra_context = {'title': _('Log in'), 'button': _('Enter')}
 
 
 def user_logout(request):
