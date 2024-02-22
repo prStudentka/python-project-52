@@ -1,11 +1,11 @@
 from django.shortcuts import render
-#from .forms import *
 from .models import *
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.list import ListView
 from django.utils.translation import gettext as _
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from task_manager.mixin import DeleteProtectedMixin
 
 
 # Create your views here.
@@ -36,13 +36,15 @@ class StatusUpdateView(SuccessMessageMixin, UpdateView):
     extra_context = {'title': _('Update status'), 'button': _('Update')}
 
 
-class StatusDeleteView(SuccessMessageMixin, DeleteView):
+class StatusDeleteView(SuccessMessageMixin, DeleteProtectedMixin, DeleteView):
     template_name = 'form_status.html'    
     model = Status
     context_object_name = 'form'
-    success_url = reverse_lazy('status_index')
+    redirect_url = 'status_index'
+    success_url = reverse_lazy(redirect_url)
     info_message = _('Are you sure you want to delete')
     success_message = _("Status successfully deleted")
+    error_message = _('You can\'t to delete because status was used')
     extra_context = {'title': _('Delete status'), 'button': _('Yes, delete'), 'text': info_message, 'new_class': 'btn btn-danger'}
 	
     def get_context_data(self, *, object_list=None, **kwargs):

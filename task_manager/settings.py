@@ -180,5 +180,5 @@ ROLLBAR = {
     'environment': 'development' if DEBUG else 'production',
     'code_version': '1.0',
     'root': BASE_DIR,
+	'branch': 'master',
 }
-rollbar.init(**ROLLBAR)

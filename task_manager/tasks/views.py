@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import *
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-
 from django.views.generic.detail import DetailView
 from django.utils.translation import gettext as _
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django_filters.views import FilterView
 from task_manager.tasks.filters import TaskFilter
+from task_manager.mixin import DeleteProtectedMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 # Create your views here.
@@ -48,9 +49,11 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
     template_name = 'form_task.html'    
     model = Task
     context_object_name = 'form'
-    success_url = reverse_lazy('tasks_index')
+    redirect_url = 'tasks_index'
+    success_url = reverse_lazy(redirect_url)
     info_message = _('Are you sure you want to delete')
     success_message = _('Task successfully deleted')
+
     error_message = _('Only author of the task can delete it')
     extra_context = {'title': _('Delete task'), 'button': _('Yes, delete'), 'text': info_message, 'new_class': 'btn btn-danger'}
 	
@@ -58,7 +61,7 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['text'] = f'<p>{self.info_message} {self.object.name}?</p>'
         return context
-		
+
     def post(self, request, *args, **kwargs):
         if request.user != self.get_object().author:
             messages.error(request, self.error_message)
