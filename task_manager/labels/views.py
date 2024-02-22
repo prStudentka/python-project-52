@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from .models import *
+from .models import Label
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.list import ListView
 from django.utils.translation import gettext as _
@@ -17,7 +16,7 @@ class LabelsView(ListView):
 
 
 class LabelCreateView(SuccessMessageMixin, CreateView):
-    template_name = 'form.html'    
+    template_name = 'form.html'
     model = Label
     context_object_name = 'form'
     fields = ['name']
@@ -27,7 +26,7 @@ class LabelCreateView(SuccessMessageMixin, CreateView):
 
 
 class LabelUpdateView(SuccessMessageMixin, UpdateView):
-    template_name = 'form.html'    
+    template_name = 'form.html'
     model = Label
     context_object_name = 'form'
     fields = ['name',]
@@ -37,7 +36,7 @@ class LabelUpdateView(SuccessMessageMixin, UpdateView):
 
 
 class LabelDeleteView(SuccessMessageMixin, DeleteProtectedMixin, DeleteView):
-    template_name = 'form.html'    
+    template_name = 'form.html'
     model = Label
     context_object_name = 'form'
     redirect_url = 'marked:labels_index'
@@ -45,8 +44,11 @@ class LabelDeleteView(SuccessMessageMixin, DeleteProtectedMixin, DeleteView):
     info_message = _('Are you sure you want to delete')
     success_message = _("Label successfully deleted")
     error_message = _('You can\'t to delete because label was used')
-    extra_context = {'title': _('Delete label'), 'button': _('Yes, delete'), 'text': info_message, 'new_class': 'btn btn-danger'}
-	
+    extra_context = {'title': _('Delete label'),
+                     'button': _('Yes, delete'),
+                     'text': info_message,
+                     'new_class': 'btn btn-danger'}
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['text'] = f'<p>{self.info_message} {self.object.name}?</p>'

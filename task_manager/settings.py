@@ -46,14 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	"django_bootstrap5",
-	
+	'django_bootstrap5',
     'task_manager',
-	'task_manager.users.apps.UsersConfig',
-	'task_manager.statuses.apps.StatusesConfig',
-	'task_manager.labels.apps.LabelsConfig',
-	'task_manager.tasks.apps.TasksConfig',
-	'django_filters',
+    'task_manager.users.apps.UsersConfig',
+    'task_manager.statuses.apps.StatusesConfig',
+    'task_manager.labels.apps.LabelsConfig',
+    'task_manager.tasks.apps.TasksConfig',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -95,15 +94,14 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
-    'default':dj_database_url.config(
-	    default=os.getenv('DATABASE_URL'), 
+    'default': dj_database_url.config(
+	    default=os.getenv('DATABASE_URL'),
 		conn_max_age=600),
     'default_': {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
-
 
 
 # Password validation

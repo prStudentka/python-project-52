@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect
-from .forms import *
-from .models import *
+from .forms import RegistrationForm, AuthenticationForm
+from .models import CustomUser
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, get_user_model
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
@@ -21,7 +21,7 @@ class IndexView(ListView):
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
-    template_name = 'form.html'    
+    template_name = 'form.html'
     form_class = RegistrationForm
     context_object_name = 'form'
     success_url = reverse_lazy('log in')

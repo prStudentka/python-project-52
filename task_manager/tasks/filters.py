@@ -10,7 +10,7 @@ from django.forms import CheckboxInput
 class TaskFilter(django_filters.FilterSet):
     status = django_filters.ModelChoiceFilter(field_name='status', queryset=Status.objects.all())
     labels = django_filters.ModelChoiceFilter(field_name='labels', queryset=Label.objects.all())
-    my_task = django_filters.BooleanFilter(field_name='my_tasks', widget =CheckboxInput, label = _('Only my tasks'), method='filter_tasks' )
+    my_task = django_filters.BooleanFilter(field_name='my_tasks', widget=CheckboxInput, label=_('Only my tasks'), method='filter_tasks')
 
     class Meta:
         model = Task

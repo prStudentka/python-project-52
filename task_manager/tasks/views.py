@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib import messages
-from .models import *
+from .models import Task
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.detail import DetailView
 from django.utils.translation import gettext as _
@@ -8,8 +8,6 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django_filters.views import FilterView
 from task_manager.tasks.filters import TaskFilter
-from task_manager.mixin import DeleteProtectedMixin
-from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 # Create your views here.
@@ -22,7 +20,7 @@ class IndexView(FilterView):
 
 
 class TaskCreateView(SuccessMessageMixin, CreateView):
-    template_name = 'form_task.html'    
+    template_name = 'form_task.html'
     model = Task
     context_object_name = 'form'
     fields = ['name', 'description', 'status', 'executor', 'labels']
@@ -36,7 +34,7 @@ class TaskCreateView(SuccessMessageMixin, CreateView):
 
 
 class TaskUpdateView(SuccessMessageMixin, UpdateView):
-    template_name = 'form_task.html'    
+    template_name = 'form_task.html'
     model = Task
     context_object_name = 'form'
     fields = ['name', 'description', 'status', 'executor', 'labels']
@@ -46,7 +44,7 @@ class TaskUpdateView(SuccessMessageMixin, UpdateView):
 
 
 class TaskDeleteView(SuccessMessageMixin, DeleteView):
-    template_name = 'form_task.html'    
+    template_name = 'form_task.html'
     model = Task
     context_object_name = 'form'
     redirect_url = 'tasks_index'
@@ -70,7 +68,6 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
 
 
 class TaskDetailView(SuccessMessageMixin, DetailView):
-    template_name = 'task.html'    
+    template_name = 'task.html'
     model = Task
     context_object_name = 'task'
-
