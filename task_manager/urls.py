@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from task_manager import views
+from task_manager.users.views import UserLoginView, user_logout
 
 
 urlpatterns = [
@@ -26,4 +27,6 @@ urlpatterns = [
 	path('statuses/', include('task_manager.statuses.urls')),
 	path('labels/', include('task_manager.labels.urls')),
 	path('tasks/', include('task_manager.tasks.urls')),
+	path('login/', UserLoginView.as_view(), name='log in'),
+	path('logout/', user_logout, name='log out'),
 ]
