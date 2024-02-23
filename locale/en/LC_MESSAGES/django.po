@@ -269,7 +269,7 @@ msgstr "Вы залогинены"
 
 #: task_manager/users/views.py:48
 msgid "Enter"
-msgstr "Вход"
+msgstr "Войти"
 
 #: task_manager/users/views.py:53
 msgid "You are logged out"
