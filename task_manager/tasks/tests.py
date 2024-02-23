@@ -48,11 +48,13 @@ class TaskCrudTest(TestCase):
             'author': self.test_author.pk
         }
         url = reverse_lazy('create task')
-        self.client.login(username=self.login_data['username'], password=self.login_data['password'])
+        self.client.login(username=self.login_data['username'],
+                          password=self.login_data['password'])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         response = self.client.post(url, data, format='json')
-        self.assertRedirects(response, reverse_lazy('tasks_index'), status_code=302)
+        url_back = reverse_lazy('tasks_index')
+        self.assertRedirects(response, url_back, status_code=302)
         task_name = Task.objects.get(name=data['name'])
         self.assertEqual(task_name.name, data['name'])
 
@@ -63,14 +65,16 @@ class TaskCrudTest(TestCase):
             'status': self.status.pk,
             'author': self.test_author.pk
         }
-        self.client.login(username=self.login_data['username'], password=self.login_data['password'])
+        self.client.login(username=self.login_data['username'],
+                          password=self.login_data['password'])
         url = reverse_lazy('update task', args=[self.first_task.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         response = self.client.post(url, data=update_data)
         self.first_task.refresh_from_db()
         self.assertEqual(self.first_task.name, update_data['name'])
-        self.assertRedirects(response, reverse_lazy('tasks_index'), status_code=302)
+        url_back = reverse_lazy('tasks_index')
+        self.assertRedirects(response, url_back, status_code=302)
 
     def test_delete_task(self):
         self.client.force_login(user=self.test_author)

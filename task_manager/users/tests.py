@@ -53,7 +53,8 @@ class UserCrudTest(TestCase):
 
     def test_login_user(self):
         url = reverse_lazy('log in')
-        self.client.login(username=self.login_data['username'], password=self.login_data['password'])
+        self.client.login(username=self.login_data['username'],
+                          password=self.login_data['password'])
         response = self.client.post(url, self.login_data)
         self.assertRedirects(response, reverse_lazy('index'), status_code=302)
 
@@ -65,14 +66,16 @@ class UserCrudTest(TestCase):
             'password1': 'abcd',
             'password2': 'abcd'
         }
-        self.client.login(username=self.login_data['username'], password=self.login_data['password'])
+        self.client.login(username=self.login_data['username'],
+                          password=self.login_data['password'])
         url = reverse_lazy('update', args=[self.test_user.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         response = self.client.post(url, data=update_data)
         self.test_user.refresh_from_db()
         self.assertEqual(self.test_user.first_name, update_data['first_name'])
-        self.assertRedirects(response, reverse_lazy('users_index'), status_code=302)
+        url_back = reverse_lazy('users_index')
+        self.assertRedirects(response, url_back, status_code=302)
 
     def test_delete_user(self):
         self.client.force_login(user=self.test_user)
