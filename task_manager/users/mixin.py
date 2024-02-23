@@ -8,8 +8,7 @@ from django.shortcuts import redirect
 class UserLoginPassesMixin(LoginRequiredMixin, UserPassesTestMixin):
     error_login_message = _('You are not logged in! Please log in.')
     error_permission_message = _('You do not have permissions to change this user')
-	
-	
+
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.error(request, self.error_login_message)

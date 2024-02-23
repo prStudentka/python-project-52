@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from .models import *
+from .models import Status
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.views.generic.list import ListView
 from django.utils.translation import gettext as _
@@ -15,9 +14,9 @@ class IndexView(ListView):
     context_object_name = 'statuses'
     extra_context = {'title': _('Statuses'), 'button': _('Create status')}
 
-	
+
 class StatusCreateView(SuccessMessageMixin, CreateView):
-    template_name = 'form_status.html'    
+    template_name = 'form_status.html'
     model = Status
     context_object_name = 'form'
     fields = ['name']
@@ -27,17 +26,17 @@ class StatusCreateView(SuccessMessageMixin, CreateView):
 
 
 class StatusUpdateView(SuccessMessageMixin, UpdateView):
-    template_name = 'form_status.html'    
+    template_name = 'form_status.html'
     model = Status
     context_object_name = 'form'
-    fields = ['name',]
+    fields = ['name', ]
     success_url = reverse_lazy('status_index')
     success_message = _("Status successfully updated")
     extra_context = {'title': _('Update status'), 'button': _('Update')}
 
 
 class StatusDeleteView(SuccessMessageMixin, DeleteProtectedMixin, DeleteView):
-    template_name = 'form_status.html'    
+    template_name = 'form_status.html'
     model = Status
     context_object_name = 'form'
     redirect_url = 'status_index'
@@ -45,8 +44,9 @@ class StatusDeleteView(SuccessMessageMixin, DeleteProtectedMixin, DeleteView):
     info_message = _('Are you sure you want to delete')
     success_message = _("Status successfully deleted")
     error_message = _('You can\'t to delete because status was used')
-    extra_context = {'title': _('Delete status'), 'button': _('Yes, delete'), 'text': info_message, 'new_class': 'btn btn-danger'}
-	
+    extra_context = {'title': _('Delete status'), 'button': _('Yes, delete'), 'text': info_message,
+                     'new_class': 'btn btn-danger'}
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['text'] = f'<p>{self.info_message} {self.object.name}?</p>'

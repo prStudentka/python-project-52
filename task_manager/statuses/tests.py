@@ -8,28 +8,23 @@ from django.core.exceptions import ObjectDoesNotExist
 class StatusCrudTest(TestCase):
 
     def setUp(self):
-	    self.status_test = Status.objects.create(
-		    name='test status'
-		)
-	    data = {
-	       'name': 'worked',
-        }
-
+        self.status_test = Status.objects.create(
+            name='test status'
+        )
 
     def test_create_status(self):
-	    data = {
-	       'name': 'worked',
+        data = {
+            'name': 'worked',
         }
-	    url = reverse_lazy('create status')		
-	    response = self.client.post(url, data, format='json')
-	    self.assertRedirects(response, reverse_lazy('status_index'), status_code=302)
-	    status = Status.objects.get(name=data['name'])
-	    self.assertEqual(status.name, data['name'])
+        url = reverse_lazy('create status')
+        response = self.client.post(url, data, format='json')
+        self.assertRedirects(response, reverse_lazy('status_index'), status_code=302)
+        status = Status.objects.get(name=data['name'])
+        self.assertEqual(status.name, data['name'])
 
-	
     def test_update_status(self):
         update_data = {
-	       'name': 'fix it'
+            'name': 'fix it'
         }
         url = reverse_lazy('update status', args=[self.status_test.pk])
         response = self.client.get(url)
@@ -39,7 +34,6 @@ class StatusCrudTest(TestCase):
         self.assertEqual(self.status_test.name, update_data['name'])
         self.assertRedirects(response, reverse_lazy('status_index'), status_code=302)
 
-	
     def test_delete_status(self):
         before_count_status = len(Status.objects.all())
         self.assertEqual(before_count_status, 1)

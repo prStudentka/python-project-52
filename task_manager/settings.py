@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-import rollbar
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
@@ -46,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'django_bootstrap5',
+    'django_bootstrap5',
     'task_manager',
     'task_manager.users.apps.UsersConfig',
     'task_manager.statuses.apps.StatusesConfig',
@@ -95,8 +94,8 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     'default': dj_database_url.config(
-	    default=os.getenv('DATABASE_URL'),
-		conn_max_age=600),
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600),
     'default_': {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
@@ -110,14 +109,14 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-		'OPTIONS': {
-		    'min_length': 3,
-		}
+        'OPTIONS': {
+            'min_length': 3,
+        }
     },
 ]
 '''
 AUTH_PASSWORD_VALIDATORS = [
-    
+
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -129,8 +128,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    }, 
-    
+    },
+
 ]
 '''
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -139,7 +138,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'ru-RU'
-#LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
 LANGUAGES = [
     ('en', _('English')),
     ('ru', _('Russian')),
@@ -159,11 +158,9 @@ LOCALE_PATHS = [
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 
-
 LOGIN_REDIRECT_URL = '/'
 
 LOGIN_URL = 'login/'
-
 
 
 STATIC_URL = 'static/'
@@ -178,5 +175,5 @@ ROLLBAR = {
     'environment': 'development' if DEBUG else 'production',
     'code_version': '1.0',
     'root': BASE_DIR,
-	'branch': 'master',
+    'branch': 'master',
 }

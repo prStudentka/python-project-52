@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect
-from .forms import RegistrationForm, AuthenticationForm
+from .forms import RegistrationForm
+from django.contrib.auth.forms import AuthenticationForm
 from .models import CustomUser
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, get_user_model
@@ -28,10 +29,10 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     success_message = _("User is successfully registered")
     extra_context = {'title': _('Sign up'), 'button': _('Register')}
 
-	
+
 class UserUpdateView(UserLoginPassesMixin, SuccessMessageMixin, UpdateView):
     template_name = 'form.html'
-    model = get_user_model()  
+    model = get_user_model()
     form_class = RegistrationForm
     context_object_name = 'form'
     success_url = reverse_lazy('users_index')
@@ -62,8 +63,9 @@ class UserDeleteView(UserLoginPassesMixin, DeleteProtectedMixin, SuccessMessageM
     info_message = _('Are you sure you want to delete')
     success_message = _("User is successfully deleted!")
     error_message = _('You can\'t to delete user because he was used')
-	
-    extra_context = {'title': _('Delete user'), 'button': _('Yes, delete'), 'text': info_message, 'new_class': 'btn btn-danger'}
+
+    extra_context = {'title': _('Delete user'), 'button': _('Yes, delete'), 'text': info_message,
+                     'new_class': 'btn btn-danger'}
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

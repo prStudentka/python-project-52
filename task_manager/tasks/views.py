@@ -54,7 +54,7 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
 
     error_message = _('Only author of the task can delete it')
     extra_context = {'title': _('Delete task'), 'button': _('Yes, delete'), 'text': info_message, 'new_class': 'btn btn-danger'}
-	
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['text'] = f'<p>{self.info_message} {self.object.name}?</p>'
