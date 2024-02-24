@@ -26,6 +26,8 @@ jobs:
         pip install poetry
         make install
         poetry add gunicorn
+        echo 'oooooooo !!!!! kkkkkkkkk '
+        echo $DATABASE_URL
         make migrate
   
     # - name: Run Tests
