@@ -3,23 +3,20 @@ name: Django CI
 on:
   push:
     branches: [ "main" ]
-
-env:
-  SECRET_KEY: ${{ secrets.SECRET_KEY }}
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
   
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment:
+       DATABASE_URL
     services:
       db:
         image: postgres:15
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_DB: ${{ DATABASE_URL.POSTGRES_DB }}
         ports:
           - 5432:5432
         options:
@@ -48,6 +45,10 @@ jobs:
 
     - name: Run code coverage
       uses: paambaati/codeclimate-action@v3.2.0
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
         coverageCommand: make coverage
         debug: true
