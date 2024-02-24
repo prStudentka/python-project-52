@@ -98,16 +98,17 @@ parsed_url = urlparse(DB_URL)
 DATABASES = {
     'default': {
         "ENGINE": 'django.db.backends.postgresql',
-        'NAME': parsed_url.path[1:],
+#        'NAME': parsed_url.path[1:],
+        'NAME': 'db_task_manager_dltl',
         'USER': parsed_url.username,
         'PASSWORD': parsed_url.password,
         'HOST': parsed_url.hostname,
-        'PORT': parsed_url.port,
+#        'PORT': parsed_url.port,
         'CONN_MAX_AGE': 600,
-    },
-    'default_': {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+#    },
+#    'default_': {
+#        "ENGINE": "django.db.backends.sqlite3",
+#        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
