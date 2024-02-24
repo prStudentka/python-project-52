@@ -105,18 +105,15 @@ DATABASES = {
         'PORT': parsed_url.port,
         'CONN_MAX_AGE': 600,
     },
-    'default_psycopg': {
-        "ENGINE": 'django.db.backends.postgresql',
-    },
     'default_': {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
-DATABASES['default_psycopg'] = dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        conn_max_age=600)
+# DATABASES['default_psycopg'] = dj_database_url.config(
+       # default=os.getenv('DATABASE_URL'),
+       # conn_max_age=600)
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
