@@ -3,12 +3,12 @@ name: Django CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 env:
   SECRET_KEY: ${{ secrets.SECRET_KEY }}
-
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+  
 jobs:
   build:
 
@@ -27,15 +27,11 @@ jobs:
         make install
   
     - name: Run Tests
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: |
         make test
 
     - name: Run code coverage
       uses: paambaati/codeclimate-action@v3.2.0
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
-        coverageCommand: make test-coverage
+        coverageCommand: make coverage
         debug: true
