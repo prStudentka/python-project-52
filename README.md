@@ -23,14 +23,14 @@ Task manager - service for organizing tasks between registered users.Registratio
 
 ### Install
   1) Clone repository:
-    git clone [Repository](https://github.com/prStudentka/python-project-83.git)
+    - git clone [Repository](https://github.com/prStudentka/python-project-83.git)
   2) Install dependencies:
-    make install
+    - make install
   3) Create file for enviromental variables
-     .env 
+    - .env 
   4) Create a new PostgreSQL database
   5) Make migrations
-     make migrate
+    - make migrate
   6) Create superuser
   7) Run the development server
-     make run
+    - make run
