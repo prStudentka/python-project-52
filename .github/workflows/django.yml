@@ -26,9 +26,9 @@ jobs:
         pip install poetry
         make install
   
-    - name: Run Tests
-      run: |
-        make test
+    # - name: Run Tests
+    #  run: |
+    #    make test
 
     - name: Run code coverage
       uses: paambaati/codeclimate-action@v3.2.0
