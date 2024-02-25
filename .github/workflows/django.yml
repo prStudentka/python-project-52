@@ -35,11 +35,13 @@ jobs:
         make install
         poetry add gunicorn
   
-    # - name: Run Tests
-    #  run: |
-    #      echo 'oooooooo !!!!! kkkkkkkkk '
-    #     echo $DATABASE_URL
-    #    make test
+    - name: Run Tests
+      env:
+         SECRET_KEY: ${{ secrets.SECRET_KEY }}
+         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: |
+          echo 'oooooooo !!!!! Go test !!! '
+          make test
 
     - name: Run code coverage
       uses: paambaati/codeclimate-action@v5.0.0
