@@ -9,7 +9,9 @@
 
 ### About
 Task manager - service for organizing tasks between registered users. Registration and authentication are required to work with the system.
-![Main Image](https://github.com/prStudentka/python-project-52/media/mainWindow_taskManager.jpg)
+
+
+![Main Image](https://raw.githubusercontent.com/prStudentka/python-project-52/main/media/mainWindow_taskManager.jpg)
 
 
 ### System requirements
@@ -24,26 +26,42 @@ Task manager - service for organizing tasks between registered users. Registrati
 - postgreSQL = "^15.0"
 
 ### Install
-  1) Install poetry::
-      - pip install poetry
-  2) Clone repository::
-      - git clone [Repository](https://github.com/prStudentka/python-project-52.git)
-	  - cd python-project-52
-  3) Install dependencies::
-      - make install
+  1) Install poetry:
+  ```
+       pip install poetry
+  ```
+  2) Clone repository:
+  ```
+       git clone [Repository](https://github.com/prStudentka/python-project-52.git)
+	   cd python-project-52
+  ```
+  3) Install dependencies:
+  ```
+       make install
+  ```
   4) Create file for enviromental variables:
-      - $ touch .env
-  5) Create variables::
+  ```
+      $ touch .env
+  ```
+  5) Create variables:
         SECRET_KEY='{your secret key}'
 		DATABASE_URL='postgresql://{username}:{password}@{host}:{port}/{databasename}'
-  6) Create a new PostgreSQL database::
+  6) Create a new PostgreSQL database:
+  ```
        whoami
        {username}
        sudo -u postgres createuser --createdb {username} 
-       createdb {databasename} 
-  7) Make migrations::
-      - make migrate
-  8) To create an admin superuser::
+       createdb {databasename}
+  ```
+  7) Make migrations:
+  ```
+       make migrate
+  ```
+  8) To create an admin superuser:
+  ```
         poetry run python manage.py createsuperuser
-  9) Run the development server::
-      - make run1
+  ```
+  9) Run the development server:
+  ```
+       make run1
+  ```
