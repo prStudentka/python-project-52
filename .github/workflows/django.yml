@@ -8,8 +8,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    environment:
-       DATABASE_URL
     services:
       db:
         image: postgres:15
