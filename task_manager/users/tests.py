@@ -34,13 +34,11 @@ class UserCrudTest(TestCase):
         self.assertIs(response.resolver_match.func.view_class, IndexView)
         self.assertIn(response.context['button'], 'Узнать больше')
 
-
     def test_open_registration(self):
         url = reverse_lazy('create')
         response = self.client.get(url)
         self.assertTemplateUsed(response, template_name='form.html')
         self.assertEqual(response.status_code, 200)
-
 
     def test_form_valid(self):
         form = RegistrationForm(data=self.data)
@@ -52,7 +50,6 @@ class UserCrudTest(TestCase):
         self.assertRedirects(response, reverse_lazy('log in'), status_code=302)
         user = CustomUser.objects.get(username=self.data['username'])
         self.assertEqual(user.first_name, self.data['first_name'])
-
 
     def test_login_user(self):
         url = reverse_lazy('log in')
