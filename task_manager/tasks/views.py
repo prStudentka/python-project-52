@@ -20,7 +20,7 @@ class IndexView(FilterView):
 
 
 class TaskCreateView(SuccessMessageMixin, CreateView):
-    template_name = 'form_task.html'
+    template_name = 'form.html'
     model = Task
     context_object_name = 'form'
     fields = ['name', 'description', 'status', 'executor', 'labels']
@@ -34,7 +34,7 @@ class TaskCreateView(SuccessMessageMixin, CreateView):
 
 
 class TaskUpdateView(SuccessMessageMixin, UpdateView):
-    template_name = 'form_task.html'
+    template_name = 'form.html'
     model = Task
     context_object_name = 'form'
     fields = ['name', 'description', 'status', 'executor', 'labels']
@@ -44,7 +44,7 @@ class TaskUpdateView(SuccessMessageMixin, UpdateView):
 
 
 class TaskDeleteView(SuccessMessageMixin, DeleteView):
-    template_name = 'form_task.html'
+    template_name = 'form.html'
     model = Task
     context_object_name = 'form'
     redirect_url = 'tasks_index'

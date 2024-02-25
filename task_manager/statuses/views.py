@@ -16,7 +16,7 @@ class IndexView(ListView):
 
 
 class StatusCreateView(SuccessMessageMixin, CreateView):
-    template_name = 'form_status.html'
+    template_name = 'form.html'
     model = Status
     context_object_name = 'form'
     fields = ['name']
@@ -26,7 +26,7 @@ class StatusCreateView(SuccessMessageMixin, CreateView):
 
 
 class StatusUpdateView(SuccessMessageMixin, UpdateView):
-    template_name = 'form_status.html'
+    template_name = 'form.html'
     model = Status
     context_object_name = 'form'
     fields = ['name', ]
@@ -36,7 +36,7 @@ class StatusUpdateView(SuccessMessageMixin, UpdateView):
 
 
 class StatusDeleteView(SuccessMessageMixin, DeleteProtectedMixin, DeleteView):
-    template_name = 'form_status.html'
+    template_name = 'form.html'
     model = Status
     context_object_name = 'form'
     redirect_url = 'status_index'
