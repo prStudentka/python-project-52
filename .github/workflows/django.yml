@@ -42,7 +42,7 @@ jobs:
     #    make test
 
     - name: Run code coverage
-      uses: paambaati/codeclimate-action@v3.2.0
+      uses: paambaati/codeclimate-action@v5.0.0
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
