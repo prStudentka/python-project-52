@@ -13,6 +13,7 @@ Task manager - service for organizing tasks between registered users. Registrati
 
 ![Main Image](https://raw.githubusercontent.com/prStudentka/python-project-52/main/media/mainWindow_taskManager.jpg)
 
+     Image 1 - Main window app Task Manager 
 
 ### System requirements
 - python = "^3.10"
@@ -44,8 +45,10 @@ Task manager - service for organizing tasks between registered users. Registrati
       $ touch .env
   ```
   5) Create variables:
-        SECRET_KEY='{your secret key}'
-		DATABASE_URL='postgresql://{username}:{password}@{host}:{port}/{databasename}'
+  
+       - SECRET_KEY='{your secret key}'
+	   - DATABASE_URL='postgresql://{username}:{password}@{host}:{port}/{databasename}'
+  
   6) Create a new PostgreSQL database:
   ```
        whoami
