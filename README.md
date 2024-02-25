@@ -2,9 +2,10 @@
 [![Actions Status](https://github.com/prStudentka/python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/prStudentka/python-project-52/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/5187d7c7fe7ab0691712/maintainability)](https://codeclimate.com/github/prStudentka/python-project-52/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5187d7c7fe7ab0691712/test_coverage)](https://codeclimate.com/github/prStudentka/python-project-52/test_coverage)
+[![Django CI](https://github.com/prStudentka/python-project-52/actions/workflows/django.yml/badge.svg)](https://github.com/prStudentka/python-project-52/actions/workflows/django.yml)
 
 ##  Task Manager
-   website [Task Manager]()
+   website [Task Manager](https://task-manager-pu7v.onrender.com)
 
 ### About
 Task manager - service for organizing tasks between registered users.Registration and authentication are required to work with the system.
