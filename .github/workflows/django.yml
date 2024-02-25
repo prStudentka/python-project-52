@@ -34,11 +34,11 @@ jobs:
         pip install poetry
         make install
         poetry add gunicorn
-        echo 'oooooooo !!!!! kkkkkkkkk '
-        echo $DATABASE_URL
   
     # - name: Run Tests
     #  run: |
+    #      echo 'oooooooo !!!!! kkkkkkkkk '
+    #     echo $DATABASE_URL
     #    make test
 
     - name: Run code coverage
@@ -47,6 +47,7 @@ jobs:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
       with:
         coverageCommand: make coverage
         debug: true
