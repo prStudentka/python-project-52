@@ -2,9 +2,11 @@ from django.test import TestCase
 from django.urls import reverse_lazy
 from task_manager.labels.models import Label
 from django.core.exceptions import ObjectDoesNotExist
+from django.test import tag
 # Create your tests here.
 
 
+@tag("app_name")
 class LabelCrudTest(TestCase):
 
     def setUp(self):

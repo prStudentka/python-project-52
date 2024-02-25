@@ -21,7 +21,8 @@ test:
 	poetry run python manage.py test --verbosity 2
 
 coverage:
-	poetry run coverage run manage.py test
-	poetry run coverage report && poetry run coverage xml -o coverage.xml
+	poetry run coverage run --source='task_manager' manage.py test -v 2
+	poetry run coverage report -m && poetry run coverage xml -o coverage.xml
+    
 
 .PHONY: test
