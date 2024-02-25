@@ -8,14 +8,15 @@
    website [Task Manager](https://task-manager-pu7v.onrender.com)
 
 ### About
-Task manager - service for organizing tasks between registered users.Registration and authentication are required to work with the system.
+Task manager - service for organizing tasks between registered users. Registration and authentication are required to work with the system.
+![Main Image](https://github.com/prStudentka/python-project-52/media/mainWindow_taskManager.jpg)
+
 
 ### System requirements
 - python = "^3.10"
 - django = "4.1.3"
 - django-bootstrap5 = "^23.3"
 - python-dotenv = "^1.0.0"
-- dj-database-url = "^2.1.0"
 - psycopg2-binary = "^2.9.9"
 - django-filter = "^23.5"
 - rollbar = "0.16.3"
@@ -23,15 +24,26 @@ Task manager - service for organizing tasks between registered users.Registratio
 - postgreSQL = "^15.0"
 
 ### Install
-  1) Clone repository:
-      - git clone [Repository](https://github.com/prStudentka/python-project-83.git)
-  2) Install dependencies:
+  1) Install poetry::
+      - pip install poetry
+  2) Clone repository::
+      - git clone [Repository](https://github.com/prStudentka/python-project-52.git)
+	  - cd python-project-52
+  3) Install dependencies::
       - make install
-  3) Create file for enviromental variables:
-      - .env 
-  4) Create a new PostgreSQL database
-  5) Make migrations
+  4) Create file for enviromental variables:
+      - $ touch .env
+  5) Create variables::
+        SECRET_KEY='{your secret key}'
+		DATABASE_URL='postgresql://{username}:{password}@{host}:{port}/{databasename}'
+  6) Create a new PostgreSQL database::
+       whoami
+       {username}
+       sudo -u postgres createuser --createdb {username} 
+       createdb {databasename} 
+  7) Make migrations::
       - make migrate
-  6) Create superuser
-  7) Run the development server
-      - make run
+  8) To create an admin superuser::
+        poetry run python manage.py createsuperuser
+  9) Run the development server::
+      - make run1

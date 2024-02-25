@@ -1,11 +1,14 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
+description = "Task manager - web service allows to define a tasks"
 authors = ["prStudentka <bk_nvk@mail.ru>"]
 readme = "README.md"
 packages = [{include = "task_manager"}]
-classifiers = []
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Framework :: Django",
+]
 repository = "https://github.com/prStudentka/python-project-52"
 
 [tool.poetry.dependencies]
@@ -13,7 +16,6 @@ python = "^3.10"
 django = "4.1.3"
 django-bootstrap5 = "^23.3"
 python-dotenv = "^1.0.0"
-dj-database-url = "^2.1.0"
 psycopg2-binary = "^2.9.9"
 django-filter = "^23.5"
 rollbar = "0.16.3"
