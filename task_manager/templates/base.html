@@ -9,14 +9,13 @@
 <html lang="{{ LANGUAGE_CODE }}">
      <head>
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Менеджер задач Hexlet</title>
+        <title>{% translate 'Task manager' %} Hexlet</title>
     </head>
  <body class="d-flex flex-column min-vh-100">
  
-{% block header %}
+
 	{% include 'header.html' %}
 
-{% endblock header %}
  {% autoescape off %}
    {% bootstrap_messages %}
  {% endautoescape %}
@@ -25,9 +24,7 @@
 {% endblock content %}
 </div>
 
-{% block footer %}   
     {% include 'footer.html' %}
-{% endblock footer %}
 
      </body>
 </html>

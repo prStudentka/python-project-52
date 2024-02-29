@@ -15,29 +15,27 @@ from task_manager.mixin import DeleteProtectedMixin
 
 
 class IndexView(ListView):
-    template_name = 'users.html'
+    template_name = 'users/users.html'
     model = CustomUser
     context_object_name = 'users'
     extra_context = {'title': _('Users')}
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
-    template_name = 'form.html'
+    template_name = 'users/create.html'
     form_class = RegistrationForm
     context_object_name = 'form'
     success_url = reverse_lazy('log in')
     success_message = _("User is successfully registered")
-    extra_context = {'title': _('Sign up'), 'button': _('Register')}
 
 
 class UserUpdateView(UserLoginPassesMixin, SuccessMessageMixin, UpdateView):
-    template_name = 'form.html'
+    template_name = 'users/update.html'
     model = get_user_model()
     form_class = RegistrationForm
     context_object_name = 'form'
     success_url = reverse_lazy('users_index')
     success_message = _("User successfully updated!")
-    extra_context = {'title': _('Update user'), 'button': _('Update')}
 
 
 class UserLoginView(SuccessMessageMixin, LoginView):
@@ -46,7 +44,7 @@ class UserLoginView(SuccessMessageMixin, LoginView):
     next_page = reverse_lazy('index')
     context_object_name = 'form'
     success_message = _("You are logged in")
-    extra_context = {'title': _('Log in'), 'button': _('Enter')}
+    #extra_context = {'title': _('Log in'), 'button': _('Enter')}
 
 
 def user_logout(request):
@@ -56,18 +54,9 @@ def user_logout(request):
 
 
 class UserDeleteView(UserLoginPassesMixin, DeleteProtectedMixin, SuccessMessageMixin, DeleteView):
-    template_name = 'form.html'
+    template_name = 'users/delete.html'
     model = CustomUser
     redirect_url = 'users_index'
     success_url = reverse_lazy(redirect_url)
-    info_message = _('Are you sure you want to delete')
     success_message = _("User is successfully deleted!")
     error_message = _('You can\'t to delete user because he was used')
-
-    extra_context = {'title': _('Delete user'), 'button': _('Yes, delete'), 'text': info_message,
-                     'new_class': 'btn btn-danger'}
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['text'] = f'<p>{self.info_message} {self.request.user}?</p>'
-        return context

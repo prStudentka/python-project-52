@@ -3,16 +3,23 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-<h1 class="my-4"> {{ title }} </h1>
-{% if text %}
-    {{ text | safe }}
-{% endif %}
+ {% block title_form %}
 
+<h1 class="my-4"> {% translate 'Log in' %} </h1>
+
+ {% endblock title_form %}
+ {% block text_form %}
+ {% endblock text_form %}
 <form method="post">
     {% csrf_token %}
 	{% bootstrap_form_errors form type='non_fields' %}
 	{% bootstrap_form form %}
-    <input class="{{new_class|default:'btn btn-primary'}}" type="submit" value="{{ button }}">
+	
+	 {% block button_form %}
+
+    <input class="btn btn-primary" type="submit" value="{% translate 'Enter' %}">
+
+	 {% endblock button_form %}
 </form>
 
 {% endblock content %}
