@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import dj_database_url
-from urllib.parse import urlparse
+#from urllib.parse import urlparse
 from pathlib import Path
 from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
@@ -130,21 +130,6 @@ AUTH_PASSWORD_VALIDATORS = [
         }
     },
 ]
-
-#AUTH_PASSWORD_VALIDATORS = [
-#    {
-#        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-#    },
-#    {
-#        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-#    },
-#    {
-#        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-#    },
-#    {
-#        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-#    },
-#]
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
