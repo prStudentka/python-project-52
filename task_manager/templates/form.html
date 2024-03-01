@@ -8,12 +8,14 @@
 <h1 class="my-4"> {% translate 'Log in' %} </h1>
 
  {% endblock title_form %}
- {% block text_form %}
- {% endblock text_form %}
+
 <form method="post">
     {% csrf_token %}
 	{% bootstrap_form_errors form type='non_fields' %}
 	{% bootstrap_form form %}
+	
+ {% block text_form %}
+ {% endblock text_form %}
 	
 	 {% block button_form %}
 

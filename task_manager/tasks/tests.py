@@ -22,7 +22,7 @@ class TaskCrudTest(TestCase):
             first_name='Pizza',
             last_name='Delivery',
             username='user_test',
-            password='12345'
+            password='i12345'
         )
         self.status = Status.objects.create(name='status_test')
         self.label1 = Label.objects.create(name='label test one')
@@ -107,7 +107,7 @@ class TaskCrudTest(TestCase):
         url = reverse_lazy('detail task', args=[key])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='task.html')
+        self.assertTemplateUsed(response, template_name='tasks/task.html')
 
     def test_filter_task(self):
         data = {

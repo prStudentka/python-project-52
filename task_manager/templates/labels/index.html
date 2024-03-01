@@ -4,8 +4,8 @@
 
 {% block content %}
 
-<h1 class="my-4">{{ title }} </h1>
-<a class="btn btn-primary mb-3" href="{% url 'marked:create label' %}">{{button}}</a>
+<h1 class="my-4">{% translate 'Labels' %}</h1>
+<a class="btn btn-primary mb-3" href="{% url 'marked:create label' %}">{% translate 'Create label' %}</a>
 <table class="table table-striped">
     <thead>
         <tr>

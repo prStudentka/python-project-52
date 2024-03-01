@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="container wrapper flex-grow-1">
-<h1 class="my-4">{{ title }}</h1>
-<a class="btn btn-primary mb-3" href="{% url 'create task' %}" role="button">{{ button }}</a>
+<h1 class="my-4">{% translate 'Tasks' %}</h1>
+<a class="btn btn-primary mb-3" href="{% url 'create task' %}" role="button">{% translate 'Create task' %}</a>
 
 {% include 'filter_form.html' %}
 

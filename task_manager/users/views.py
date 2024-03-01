@@ -15,11 +15,9 @@ from task_manager.mixin import DeleteProtectedMixin
 
 
 class IndexView(ListView):
-    template_name = 'users/users.html'
+    template_name = 'users/index.html'
     model = CustomUser
     context_object_name = 'users'
-    extra_context = {'title': _('Users')}
-
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = 'users/create.html'
@@ -44,7 +42,6 @@ class UserLoginView(SuccessMessageMixin, LoginView):
     next_page = reverse_lazy('index')
     context_object_name = 'form'
     success_message = _("You are logged in")
-    #extra_context = {'title': _('Log in'), 'button': _('Enter')}
 
 
 def user_logout(request):

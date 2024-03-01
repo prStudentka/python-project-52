@@ -1,0 +1,10 @@
+{% extends "form.html" %}
+{% load i18n %}
+
+{% block title_form %}
+<h1 class="my-4"> {% translate 'Update label' %} </h1>
+{% endblock title_form %}
+
+{% block button_form %}
+<input class="btn btn-primary" type="submit" value="{% translate 'Update' %}">
+{% endblock button_form %}
