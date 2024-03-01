@@ -19,6 +19,7 @@ class IndexView(ListView):
     model = CustomUser
     context_object_name = 'users'
 
+
 class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = 'users/create.html'
     form_class = RegistrationForm
