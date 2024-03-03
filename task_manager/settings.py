@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import dj_database_url
-# from urllib.parse import urlparse
 from pathlib import Path
 from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
@@ -99,25 +98,6 @@ DATABASES = {
         conn_max_age=600),
 }
 
-'''
-DB_URL = os.getenv('DATABASE_URL')
-parsed_url = urlparse(DB_URL)
-DATABASES = {
-    'default': {
-        "ENGINE": 'django.db.backends.postgresql',
-        'NAME': parsed_url.path[1:],
-        'USER': parsed_url.username,
-        'PASSWORD': parsed_url.password,
-        'HOST': parsed_url.hostname,
-        'PORT': parsed_url.port,
-        'CONN_MAX_AGE': 600,
-    },
-    'default_': {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
-}
-'''
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

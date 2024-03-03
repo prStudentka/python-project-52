@@ -4,22 +4,17 @@ from task_manager.users.models import CustomUser
 from task_manager.users.forms import RegistrationForm
 from django.core.exceptions import ObjectDoesNotExist
 from task_manager.views import IndexView
+from django.core.management import call_command
 
 
 # Create your tests here.
 class UserCrudTest(TestCase):
 
+    fixtures = ['users.json']
+
     def setUp(self):
-        self.test_user = CustomUser.objects.create_user(
-            first_name='Blue',
-            last_name='Joe',
-            username='user_test1',
-            password='12345'
-        )
-        self.login_data = {
-            'username': 'user_test1',
-            'password': '12345'
-        }
+        call_command('loaddata', 'users.json', verbosity=2)
+        self.test_user = CustomUser.objects.get(pk=1)
         self.data = {
             'first_name': 'Petrov',
             'last_name': 'Ivan',
@@ -37,7 +32,7 @@ class UserCrudTest(TestCase):
     def test_open_registration(self):
         url = reverse_lazy('create')
         response = self.client.get(url)
-        self.assertTemplateUsed(response, template_name='form.html')
+        self.assertTemplateUsed(response, template_name='users/create.html')
         self.assertEqual(response.status_code, 200)
 
     def test_form_valid(self):
@@ -52,28 +47,29 @@ class UserCrudTest(TestCase):
         self.assertEqual(user.first_name, self.data['first_name'])
 
     def test_login_user(self):
+        new_password = '12345'
+        self.test_user.set_password(new_password)
+        self.test_user.save()
+        login_data = {
+            'username': self.test_user.username,
+            'password': new_password
+        }
         url = reverse_lazy('log in')
-        self.client.login(username=self.login_data['username'],
-                          password=self.login_data['password'])
-        response = self.client.post(url, self.login_data)
-        self.assertRedirects(response, reverse_lazy('index'), status_code=302)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(url, login_data, follow=True)
+        url_back = reverse_lazy('index')
+        self.assertRedirects(response, url_back, status_code=302)
+        self.assertTemplateUsed(response, template_name='index.html')
 
     def test_update_user(self):
-
-        update_data = {
-            'first_name': 'Ivanov',
-            'last_name': 'Ivan',
-            'username': 'user_test',
-            'password1': 'abcd',
-            'password2': 'abcd'
-        }
         self.client.force_login(user=self.test_user)
         url = reverse_lazy('update', args=[self.test_user.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        response = self.client.post(url, data=update_data)
+        response = self.client.post(url, data=self.data)
         self.test_user.refresh_from_db()
-        self.assertEqual(self.test_user.first_name, update_data['first_name'])
+        self.assertEqual(self.test_user.first_name, self.data['first_name'])
         url_back = reverse_lazy('users_index')
         self.assertRedirects(response, url_back, status_code=302)
 

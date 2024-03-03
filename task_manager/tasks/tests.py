@@ -6,73 +6,58 @@ from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from task_manager.tasks.filters import TaskFilter
+from django.core.management import call_command
 
 
 # Create your tests here.
 class TaskCrudTest(TestCase):
 
+    fixtures = ['users.json', 'statuses.json', 'tasks.json']
+
     def setUp(self):
-        self.test_author = CustomUser.objects.create_user(
-            first_name='Blue',
-            last_name='Joe',
-            username='user_test1',
-            password='12345'
-        )
+        call_command('loaddata', 'users.json', verbosity=2)
+        call_command('loaddata', 'statuses.json', verbosity=2)
+        call_command('loaddata', 'tasks.json', verbosity=2)
+        self.test_author = CustomUser.objects.get(pk=1)
+        self.status = Status.objects.get(pk=1)
         self.executor = CustomUser.objects.create_user(
             first_name='Pizza',
             last_name='Delivery',
             username='user_test',
             password='i12345'
         )
-        self.status = Status.objects.create(name='status_test')
         self.label1 = Label.objects.create(name='label test one')
-        self.first_task = Task.objects.create(
-            name='Task first',
-            description='first description',
-            status=self.status,
-            executor=self.executor,
-            author=self.test_author
-        )
+        self.first_task = Task.objects.get(pk=1)
         self.first_task.labels.add(self.label1)
-        self.login_data = {
-            'username': 'user_test1',
-            'password': '12345'
-        }
-
-    def test_create_task(self):
-        data = {
-            'name': 'Task test',
+        self.data = {
+            'name': 'Task was created for test',
             'description': 'test description',
             'status': self.status.pk,
             'executor': self.executor.pk,
             'author': self.test_author.pk
         }
+
+    def test_create_task(self):
         url = reverse_lazy('create task')
-        self.client.login(username=self.login_data['username'],
-                          password=self.login_data['password'])
+        self.client.force_login(user=self.test_author)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, self.data, format='json', follow=True)
         url_back = reverse_lazy('tasks_index')
         self.assertRedirects(response, url_back, status_code=302)
-        task_name = Task.objects.get(name=data['name'])
-        self.assertEqual(task_name.name, data['name'])
+        task_name = Task.objects.get(name=self.data['name'])
+        self.assertEqual(task_name.name, self.data['name'])
 
     def test_update_task(self):
-        update_data = {
-            'name': 'Task update test',
-            'description': 'test description',
-            'status': self.status.pk,
-            'author': self.test_author.pk
-        }
-        self.client.login(username=self.login_data['username'],
-                          password=self.login_data['password'])
+        old_name_task = self.first_task.name
+        self.client.force_login(user=self.test_author)
         url = reverse_lazy('update task', args=[self.first_task.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        response = self.client.post(url, data=update_data)
+        response = self.client.post(url, data=self.data)
         self.first_task.refresh_from_db()
-        self.assertEqual(self.first_task.name, update_data['name'])
+        self.assertEqual(self.first_task.name, self.data['name'])
+        self.assertEqual(self.first_task.name != old_name_task, True)
         url_back = reverse_lazy('tasks_index')
         self.assertRedirects(response, url_back, status_code=302)
 

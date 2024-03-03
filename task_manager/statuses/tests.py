@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse_lazy
 from task_manager.statuses.models import Status
 from django.core.exceptions import ObjectDoesNotExist
+from task_manager.statuses.views import StatusDeleteView
 
 
 # Create your tests here.
@@ -14,7 +15,7 @@ class StatusCrudTest(TestCase):
 
     def test_create_status(self):
         data = {
-            'name': 'worked',
+            'name': 'new',
         }
         url = reverse_lazy('create status')
         response = self.client.post(url, data, format='json')
@@ -24,7 +25,7 @@ class StatusCrudTest(TestCase):
 
     def test_update_status(self):
         update_data = {
-            'name': 'fix it'
+            'name': 'tested'
         }
         url = reverse_lazy('update status', args=[self.status_test.pk])
         response = self.client.get(url)
@@ -41,6 +42,7 @@ class StatusCrudTest(TestCase):
         url = reverse_lazy('delete status', kwargs={'pk': key})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+        self.assertIs(response.resolver_match.func.view_class, StatusDeleteView)
         response = self.client.delete(url)
         with self.assertRaises(ObjectDoesNotExist):
             Status.objects.get(pk=key)

@@ -44,6 +44,7 @@ class LabelCrudTest(TestCase):
         url = reverse_lazy('marked:delete label', kwargs={'pk': key})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='labels/delete.html')
         response = self.client.delete(url)
         with self.assertRaises(ObjectDoesNotExist):
             Label.objects.get(pk=key)

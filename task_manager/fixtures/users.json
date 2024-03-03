@@ -1,0 +1,13 @@
+[
+  {
+    "model": "users.CustomUser",
+    "pk": 1,
+    "fields": {
+      "first_name": "John",
+      "last_name": "London",
+	  "username": "user_test1",
+      "password": "pass12345",
+	  "created_at": "2024-03-02"
+    }
+  }
+]
