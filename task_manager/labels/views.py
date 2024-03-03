@@ -15,8 +15,8 @@ class LabelsView(ListView):
 
 
 class LabelCreateView(SuccessMessageMixin, CreateView):
-    template_name = 'labels/create.html'
     model = Label
+    template_name = 'labels/create.html'
     context_object_name = 'form'
     fields = ['name']
     success_url = reverse_lazy('marked:labels_index')
@@ -33,10 +33,10 @@ class LabelUpdateView(SuccessMessageMixin, UpdateView):
 
 
 class LabelDeleteView(SuccessMessageMixin, DeleteProtectedMixin, DeleteView):
+    redirect_url = 'marked:labels_index'
     template_name = 'labels/delete.html'
     model = Label
     context_object_name = 'form'
-    redirect_url = 'marked:labels_index'
     success_url = reverse_lazy(redirect_url)
     success_message = _("Label successfully deleted")
     error_message = _('You can\'t to delete because label was used')

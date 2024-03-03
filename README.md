@@ -12,8 +12,7 @@ Task manager - service for organizing tasks between registered users. Registrati
 
 
 ![Main Image](https://raw.githubusercontent.com/prStudentka/python-project-52/main/media/mainWindow_taskManager.jpg)
-
-     Image 1 - Main window app Task Manager 
+      Image 1 - Main window app Task Manager 
 
 ### System requirements
 - python = "^3.10"
@@ -25,6 +24,7 @@ Task manager - service for organizing tasks between registered users. Registrati
 - rollbar = "0.16.3"
 - poetry = "^1.6.1"
 - postgreSQL = "^15.0"
+- dj-database-url = "^2.1.0"
 
 ### Install
   1) Install poetry:
