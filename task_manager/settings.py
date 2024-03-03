@@ -35,7 +35,7 @@ DEBUG = os.getenv('DJANGO_DEBUG', False)
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS=['https://*.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 # Application definition
 
 INSTALLED_APPS = [
