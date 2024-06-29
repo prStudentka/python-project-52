@@ -33,7 +33,7 @@ Task manager - service for organizing tasks between registered users. Registrati
   ```
   2) Clone repository:
   ```
-       git clone [Repository](https://github.com/prStudentka/python-project-52.git)
+       git clone https://github.com/prStudentka/python-project-52.git
 	   cd python-project-52
   ```
   3) Install dependencies:
